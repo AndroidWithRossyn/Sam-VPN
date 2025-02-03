@@ -1,0 +1,139 @@
+buildscript {
+    repositories {
+        maven { url 'https://plugins.gradle.org/m2/'}
+    }
+    dependencies {
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.13.4, 0.99.99]'
+    }
+}
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+
+repositories {
+    maven { url 'https://maven.google.com' }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'kotlin-android'
+
+ext {
+    androidSupportLibraryVersion = "28.0.0"
+}
+
+android {
+    compileSdkVersion 35
+
+    packagingOptions {
+        pickFirst '**/*.so'
+    }
+
+    defaultConfig {
+        applicationId 'com.samvpn.app'
+        minSdkVersion 21
+        targetSdkVersion 35
+        versionCode 11
+        versionName "11.0"
+
+        manifestPlaceholders = [
+                onesignal_app_id: '4e89e709-9740-4ecb-9556-c7af8928e400',
+                onesignal_google_project_number: 'REMOTE'
+        ]
+
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "SHARED_PREFS", "\"ONE_CONNECT_SDK\""
+
+        namespace 'com.samvpn.app'
+    }
+    buildFeatures {
+        buildConfig = true
+    }
+
+    buildTypes {
+        release {
+
+            lintOptions {
+                disable 'MissingTranslation'
+                checkReleaseBuilds false
+                abortOnError false
+            }
+
+            debuggable false
+            jniDebuggable false
+            renderscriptDebuggable false
+            pseudoLocalesEnabled false
+            zipAlignEnabled true
+            shrinkResources false
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+        }
+        debug {
+        }
+    }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    implementation "androidx.work:work-runtime:2.10.0"
+
+    implementation "androidx.work:work-runtime-ktx:2.10.0"
+
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+
+    implementation 'com.google.android.gms:play-services-basement:18.5.0'
+
+    implementation 'com.google.firebase:firebase-database:21.0.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'com.google.firebase:firebase-auth:20.0.1'
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'androidx.core:core-ktx:1.15.0'
+    implementation 'com.github.AppIntro:AppIntro:6.0.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation 'com.github.GrenderG:Toasty:1.2.5'
+    implementation 'com.onesignal:OneSignal:3.15.3'
+
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    implementation 'com.pixplicity.easyprefs:EasyPrefs:1.10.0'
+
+    implementation "com.airbnb.android:lottie:5.2.0"
+
+    implementation 'com.google.android.gms:play-services-ads:23.6.0'
+    implementation 'com.facebook.android:audience-network-sdk:6.18.0'
+
+    implementation("com.android.billingclient:billing:7.1.1")
+    implementation 'com.google.guava:guava:32.1.3-android'
+
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.29'
+    implementation 'com.google.firebase:firebase-analytics:22.1.2'
+
+
+    implementation "androidx.viewpager2:viewpager2:1.1.0"
+
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    implementation 'com.google.ads.mediation:facebook:6.18.0.0'
+    //implementation 'com.google.android.ads:mediation-test-suite:2.0.0'
+
+    implementation 'com.github.oneconnectapi:OneConnectLib:v1.1.0'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+}
